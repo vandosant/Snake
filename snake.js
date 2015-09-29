@@ -17,9 +17,11 @@ function Game() {
   var self = this;
   self.snake = new Snake();
   self.food = createFood();
+  self.score = 0;
   var interval = function () {
     drawBorder('#25A8B2');
     updateSnake(self.snake);
+    checkCollision(self.snake, self.food, self);
     drawSnake(self.snake);
     drawFood(self.food);
     setTimeout(function () {
@@ -91,4 +93,17 @@ function drawFood(food) {
   context.fillRect(food.x * pixelSize, food.y * pixelSize, pixelSize, pixelSize);
   context.strokeStyle = "white";
   context.strokeRect(food.x * pixelSize, food.y * pixelSize, pixelSize, pixelSize);
+}
+
+function checkCollision(snake, food, game) {
+  var headX = snake.snakeArray[0].x;
+  var headY = snake.snakeArray[0].y;
+  if (headX === food.x && headY === food.y) {
+    game.food = createFood();
+    game.score++;
+    var tail = {};
+    tail.x = game.snake.snakeArray[0].x;
+    tail.y = game.snake.snakeArray[0].y;
+    snake.snakeArray.unshift(tail);
+  }
 }
