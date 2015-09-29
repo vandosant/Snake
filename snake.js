@@ -1,18 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
+  Game()
+});
+
+function Game() {
   var count = 0;
   var interval = function () {
+    drawBorder('#25A8B2');
     count++;
     if (count % 2 === 0) {
-      drawBorder('#69F5FF')
+      //drawBorder('#69F5FF')
     } else {
-      drawBorder('#25A8B2')
+      //drawBorder('#25A8B2')
     }
-    setTimeout(function() {
+    setTimeout(function () {
       requestAnimationFrame(interval);
-    }, 1000);
+    }, 240);
   };
-  interval()
-});
+  interval();
+}
 
 function drawBorder(color) {
   var canvas = document.getElementById('canvas');
