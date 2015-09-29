@@ -1,4 +1,4 @@
-## Intro to JS for Games: Building Snake
+## Intro to JS for games: Building Snake
 
 ### How to
 - This repo contains all of our code for building snake with an AI.
