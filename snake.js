@@ -1,13 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
-  Game()
+  var game = new Game();
+  window.addEventListener('keydown', function (key) {
+    key.preventDefault();
+    if (key.which == "37")
+      game.snake.direction = "left";
+    else if (key.which == "39")
+      game.snake.direction = "right";
+    else if (key.which == "38")
+      game.snake.direction = "up";
+    else if (key.which == "40")
+      game.snake.direction = "down";
+  });
 });
 
 function Game() {
-  var snake = new Snake();
+  var self = this;
+  self.snake = new Snake();
   var interval = function () {
     drawBorder('#25A8B2');
-    updateSnake(snake);
-    drawSnake(snake);
+    updateSnake(self.snake);
+    drawSnake(self.snake);
     setTimeout(function () {
       requestAnimationFrame(interval);
     }, 240);
@@ -40,9 +52,9 @@ function drawSnake(snake) {
   var pixelSize = canvas.width / 25;
   for (var i = 0; i < snake.length; i++) {
     context.fillStyle = '#FFA16E';
-    context.fillRect(snake.snakeArray[i].x * pixelSize, snake.snakeArray[i].y, pixelSize, pixelSize);
+    context.fillRect(snake.snakeArray[i].x * pixelSize, snake.snakeArray[i].y * pixelSize, pixelSize, pixelSize);
     context.strokeStyle = '#FFF';
-    context.strokeRect(snake.snakeArray[i].x * pixelSize, snake.snakeArray[i].y, pixelSize, pixelSize);
+    context.strokeRect(snake.snakeArray[i].x * pixelSize, snake.snakeArray[i].y * pixelSize, pixelSize, pixelSize);
   }
 }
 
