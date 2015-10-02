@@ -26,6 +26,7 @@ function Game() {
     updateSnake(self.snake);
     checkFoodCollision(self.snake, self.food, self);
     checkBorderCollision(self.snake, self);
+    checkSnakeCollision(self.snake, self);
     drawSnake(self.snake);
     drawFood(self.food);
     setTimeout(function () {
@@ -124,5 +125,15 @@ function checkBorderCollision(snake, game) {
     game.reset();
   } else if (headY < 0) {
     game.reset();
+  }
+}
+
+function checkSnakeCollision(snake, game) {
+  var headX = snake.snakeArray[0].x;
+  var headY = snake.snakeArray[0].y;
+  for (var i = 1; i < snake.snakeArray.length; i++) {
+    if (headX == snake.snakeArray[i].x && headY == snake.snakeArray[i].y) {
+      game.reset();
+    }
   }
 }
