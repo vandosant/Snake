@@ -18,10 +18,14 @@ function Game() {
   self.snake = new Snake();
   self.food = createFood();
   self.score = 0;
+  self.reset = function() {
+    self.snake = new Snake();
+  };
   var interval = function () {
     drawBorder('#25A8B2');
     updateSnake(self.snake);
-    checkCollision(self.snake, self.food, self);
+    checkFoodCollision(self.snake, self.food, self);
+    checkBorderCollision(self.snake, self);
     drawSnake(self.snake);
     drawFood(self.food);
     setTimeout(function () {
@@ -95,7 +99,7 @@ function drawFood(food) {
   context.strokeRect(food.x * pixelSize, food.y * pixelSize, pixelSize, pixelSize);
 }
 
-function checkCollision(snake, food, game) {
+function checkFoodCollision(snake, food, game) {
   var headX = snake.snakeArray[0].x;
   var headY = snake.snakeArray[0].y;
   if (headX === food.x && headY === food.y) {
@@ -105,5 +109,20 @@ function checkCollision(snake, food, game) {
     tail.x = game.snake.snakeArray[0].x;
     tail.y = game.snake.snakeArray[0].y;
     snake.snakeArray.unshift(tail);
+  }
+}
+
+function checkBorderCollision(snake, game) {
+  var canvas = document.getElementById('canvas');
+  var headX = snake.snakeArray[0].x;
+  var headY = snake.snakeArray[0].y;
+  if (headX > (canvas.width / 25)) {
+    game.reset();
+  } else if (headX < 0) {
+    game.reset();
+  } else if (headY >= (canvas.height / 25)) {
+    game.reset();
+  } else if (headY < 0) {
+    game.reset();
   }
 }
